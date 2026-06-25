@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SyllabusUpload from "./components/SyllabusUpload";
 import WizardOracle from "./components/WizardOracle";
+import CourseQuestPanel from "./components/CourseQuestPanel";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -77,40 +78,5 @@ function App() {
   );
 }
 
-function CourseQuestPanel({ courses, focusCourseId, focusTaskId, onCoursesUpdated, onScoreLogged }) {
-  return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-      <h2 className="text-lg font-semibold text-gray-300 mb-4">Courses</h2>
-      {courses.length === 0 && (
-        <p className="text-gray-500 text-sm">No courses loaded.</p>
-      )}
-      {courses.map((course) => (
-        <div
-          key={course.id}
-          className={`mb-4 p-3 rounded-lg border ${
-            course.id === focusCourseId
-              ? "border-emerald-500 bg-gray-800"
-              : "border-gray-700 bg-gray-800"
-          }`}
-        >
-          <div className="flex justify-between items-center mb-1">
-            <span className="font-semibold text-white">{course.code}</span>
-            <span className="text-xs text-gray-400">{course.progress}% complete</span>
-          </div>
-          <p className="text-xs text-gray-500 mb-2">{course.name}</p>
-          <div className="w-full bg-gray-700 rounded-full h-1.5">
-            <div
-              className="bg-emerald-500 h-1.5 rounded-full"
-              style={{ width: `${course.progress}%` }}
-            />
-          </div>
-          <p className="text-xs text-gray-400 mt-1">
-            Grade so far: {course.grade_so_far.toFixed(1)}%
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default App;
