@@ -61,11 +61,23 @@ class ProgressRequest(BaseModel):
 
 app = FastAPI()
 
-allowed_origins = ["http://localhost:5173", os.environ.get("FRONTEND_URL", "")]
+allowed_origins = []
+
+frontend_url = os.environ.get("FRONTEND_URL", "")
+frontend_url = frontend_url.strip()
+if frontend_url.endswith("/"):
+    frontend_url = frontend_url[:-1]
+if frontend_url != "":
+    allowed_origins.append(frontend_url)
+
+# Allow the Vite dev server on localhost or 127.0.0.1 with any port,
+# so a preflight still passes if Vite picks a port other than 5173.
+local_dev_origins = r"http://(localhost|127\.0\.0\.1):\d+"
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    allow_origin_regex=local_dev_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
