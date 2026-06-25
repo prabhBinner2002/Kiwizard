@@ -33,15 +33,15 @@ def strip_markdown_fences(text):
 
 def extract_pdf_text(pdf_base64):
     from io import BytesIO
-    from docling.document_converter import DocumentConverter
-    from docling.datamodel.base_models import DocumentStream
+    from pypdf import PdfReader
 
     pdf_bytes = base64.b64decode(pdf_base64)
-    buffer = BytesIO(pdf_bytes)
-    source = DocumentStream(name="syllabus.pdf", stream=buffer)
-    converter = DocumentConverter()
-    result = converter.convert(source)
-    text = result.document.export_to_markdown()
+    reader = PdfReader(BytesIO(pdf_bytes))
+    text = ""
+    for page in reader.pages:
+        page_text = page.extract_text()
+        if page_text:
+            text = text + page_text + "\n"
     return text
 
 
