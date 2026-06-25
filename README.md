@@ -1,4 +1,4 @@
-# Kiwizard
+# Kiwizard | Live Link: https://kiwizard.vercel.app/
 
 **The Study Oracle** — an AI-powered study assistant that replaces cluttered dashboards with one clear answer: *what should I work on right now?*
 
